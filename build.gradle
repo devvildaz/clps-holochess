@@ -1,0 +1,33 @@
+apply plugin: 'java'
+apply plugin: 'application'
+apply plugin: 'eclipse'
+
+sourceCompatibility = 1.8
+
+mainClassName = 'org.clps.holochess.ChessMain'
+
+repositories {
+    mavenCentral()
+}
+
+jar {
+	archiveVersion = '0.0.1'
+	manifest {
+	    attributes(	    	
+	      	'Main-Class': 'org.clps.holochess.ChessMain',
+	      	'Implementation-Version': project.version
+	    )
+	}
+    
+    
+}
+
+tasks.named('test') {
+    // Use JUnit Platform for unit tests.
+    useJUnitPlatform()
+}
+
+dependencies {
+    implementation 'com.google.guava:guava:31.1-jre'
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.8.1'
+}
