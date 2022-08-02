@@ -3,6 +3,7 @@ package org.clps.holochess;
 import java.awt.Component;
 import java.awt.event.*;
 import javax.swing.*;
+import java.util.*;
 // -------------------------------------------------------------------------
 /**
  * Represents the north menu-bar that contains various controls for the game.
@@ -54,21 +55,22 @@ public class ChessMenuBar
         @Override
         public void actionPerformed( ActionEvent event ){
             String buttonName = ( (JMenuItem)event.getSource() ).getText();
-            if ( buttonName.equals( "About" ) ){
-                aboutHandler();
-            }
-            else if ( buttonName.equals( "New game/restart" ) ){
-                restartHandler();
-            }
-            else if ( buttonName.equals( "Toggle game log" ) ){
-                toggleGameLogHandler();
-            }
-            else if ( buttonName.equals( "Exit" ) ){
-                exitHandler();
-            }
-            else
-            {
-                toggleGraveyardHandler();
+            
+            switch(buttonName) {
+	            case "About":
+	            	aboutHandler();
+	            	break;
+	            case "New game/restart":
+	            	restartHandler();
+	            	break;
+	            case "Toggle game log":
+	            	toggleGameLogHandler();
+	            	break;
+	            case "Exit":
+	            	exitHandler();
+	            	break;
+	            default:
+	            	toggleGraveyardHandler();
             }
         }
     }
