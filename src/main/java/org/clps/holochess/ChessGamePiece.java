@@ -409,7 +409,24 @@ public abstract class ChessGamePiece{
      * @return ImageIcon the image that represents this game piece, different
      *         for each piece.
      */
-    public abstract ImageIcon createImageByPieceType();
+    public ImageIcon createImageByPieceType() {
+    	if ( getColorOfPiece() == ChessGamePiece.WHITE ){
+            return new ImageIcon(
+                getClass().getResource("/chessImages/White"+this.getClass().getSimpleName()+".gif")
+            );            
+        }
+        else if ( getColorOfPiece() == ChessGamePiece.BLACK ){
+            return new ImageIcon(
+                getClass().getResource("/chessImages/Black"+this.getClass().getSimpleName()+".gif")
+            );            
+        }
+        else
+        {
+            return new ImageIcon(
+                getClass().getResource("/chessImages/default-Unassigned.gif")
+            ); 
+        }
+	}
     /**
      * Return the ImageIcon as an Image.
      *
