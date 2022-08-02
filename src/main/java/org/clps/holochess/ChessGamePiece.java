@@ -410,6 +410,7 @@ public abstract class ChessGamePiece{
      *         for each piece.
      */
     public abstract ImageIcon createImageByPieceType();
+    
     /**
      * Return the ImageIcon as an Image.
      *

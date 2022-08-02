@@ -3,6 +3,10 @@ package org.clps.holochess;
 import java.util.ArrayList;
 import java.awt.Color;
 import javax.swing.JOptionPane;
+
+import com.google.inject.Inject;
+import com.google.inject.name.Named;
+
 import java.awt.event.MouseEvent;
 // -------------------------------------------------------------------------
 /**
@@ -14,13 +18,19 @@ import java.awt.event.MouseEvent;
  * @author Danielle Bushrow (dbushrow)
  * @version 2010.11.17
  */
-public class ChessGameEngine{
+public class ChessGameEngine{ /*TODO: chess game engine as a server */
     private ChessGamePiece currentPiece;
     private boolean        firstClick;
+    
+    private ChessGameBoard board; /* TODO: chess game board as a client */
+    private King           king1; /* get the king of the one player */
+    private King           king2; /* get the king of the two player */
+    
+    
     private int            currentPlayer;
-    private ChessGameBoard board;
-    private King           king1;
-    private King           king2;
+    // private Object[] 	   players;
+    private ChessGameLog    gameLog;
+    
     // ----------------------------------------------------------
     /**
      * Create a new ChessGameEngine object. Accepts a fully-created
@@ -29,14 +39,16 @@ public class ChessGameEngine{
      * @param board
      *            the reference ChessGameBoard
      */
-    public ChessGameEngine( ChessGameBoard board ){
+    @Inject
+    public ChessGameEngine( @Named("GameLog") ChessGameLog gameLog, @Named("GameBoard") ChessGameBoard board){
+    	this.gameLog = gameLog;
         firstClick = true;
         currentPlayer = 1;
         this.board = board;
         this.king1 = (King)board.getCell( 7, 3 ).getPieceOnSquare();
         this.king2 = (King)board.getCell( 0, 3 ).getPieceOnSquare();
-        ( (ChessPanel)board.getParent() ).getGameLog().clearLog();
-        ( (ChessPanel)board.getParent() ).getGameLog().addToLog(
+        gameLog.clearLog(); 
+        gameLog.addToLog( /* TODO: Inject Log Service */
             "A new chess "
                 + "game has been started. Player 1 (white) will play "
                 + "against Player 2 (black). BEGIN!" );
@@ -54,8 +66,8 @@ public class ChessGameEngine{
         ( (ChessPanel)board.getParent() ).revalidate();
         this.king1 = (King)board.getCell( 7, 3 ).getPieceOnSquare();
         this.king2 = (King)board.getCell( 0, 3 ).getPieceOnSquare();
-        ( (ChessPanel)board.getParent() ).getGameLog().clearLog();
-        ( (ChessPanel)board.getParent() ).getGameLog().addToLog(
+        gameLog.clearLog();
+        gameLog.addToLog(
             "A new chess "
                 + "game has been started. Player 1 (white) will play "
                 + "against Player 2 (black). BEGIN!" );
