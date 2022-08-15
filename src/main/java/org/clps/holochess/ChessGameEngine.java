@@ -1,5 +1,7 @@
 package org.clps.holochess;
 
+import org.clps.holochess.enumeration.PieceColorEnum;
+
 import java.util.ArrayList;
 import java.awt.Color;
 import javax.swing.JOptionPane;

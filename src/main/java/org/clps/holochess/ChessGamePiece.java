@@ -1,5 +1,7 @@
 package org.clps.holochess;
 
+import org.clps.holochess.enumeration.PieceColorEnum;
+
 import java.awt.Color;
 import java.util.ArrayList;
 import javax.swing.ImageIcon;
@@ -17,7 +19,7 @@ import javax.swing.ImageIcon;
  */
 public abstract class ChessGamePiece{
     private boolean             skipMoveGeneration;
-    private int                 pieceColor;
+    private PieceColorEnum pieceColor;
     private ImageIcon           pieceImage;
     /**
      * The list of possible moves for this piece. Updated when actions involving
@@ -61,7 +63,7 @@ public abstract class ChessGamePiece{
         ChessGameBoard board,
         int row,
         int col,
-        int pieceColor ){
+        PieceColorEnum pieceColor ){
         skipMoveGeneration = false;
         this.pieceColor = pieceColor;
         pieceImage = createImageByPieceType();
@@ -93,7 +95,7 @@ public abstract class ChessGamePiece{
         ChessGameBoard board,
         int row,
         int col,
-        int pieceColor,
+        PieceColorEnum pieceColor,
         boolean skipMoveGeneration ){
         this.skipMoveGeneration = skipMoveGeneration;
         this.pieceColor = pieceColor;
@@ -133,7 +135,7 @@ public abstract class ChessGamePiece{
     protected ArrayList<String> calculateSouthMoves(
         ChessGameBoard board,
         int numMoves ){
-        ArrayList<String> moves = new ArrayList<String>();
+        ArrayList<String> moves = new ArrayList<>();
         int count = 0;
         if ( isPieceOnScreen() ){
             for ( int i = pieceRow + 1; i < 8 && count < numMoves; i++ ){
@@ -167,7 +169,7 @@ public abstract class ChessGamePiece{
     protected ArrayList<String> calculateNorthMoves(
         ChessGameBoard board,
         int numMoves ){
-        ArrayList<String> moves = new ArrayList<String>();
+        ArrayList<String> moves = new ArrayList<>();
         int count = 0;
         if ( isPieceOnScreen() ){
             for ( int i = pieceRow - 1; i >= 0 && count < numMoves; i-- ){
@@ -235,7 +237,7 @@ public abstract class ChessGamePiece{
     protected ArrayList<String> calculateWestMoves(
         ChessGameBoard board,
         int numMoves ){
-        ArrayList<String> moves = new ArrayList<String>();
+        ArrayList<String> moves = new ArrayList<>();
         int count = 0;
         if ( isPieceOnScreen() ){
             for ( int i = pieceColumn - 1; i >= 0 && count < numMoves; i-- ){
@@ -269,7 +271,7 @@ public abstract class ChessGamePiece{
     protected ArrayList<String> calculateNorthWestMoves(
         ChessGameBoard board,
         int numMoves ){
-        ArrayList<String> moves = new ArrayList<String>();
+        ArrayList<String> moves = new ArrayList<>();
         int count = 0;
         if ( isPieceOnScreen() ){
             for ( int i = 1; i < 8 && count < numMoves; i++ ){
@@ -306,7 +308,7 @@ public abstract class ChessGamePiece{
     protected ArrayList<String> calculateNorthEastMoves(
         ChessGameBoard board,
         int numMoves ){
-        ArrayList<String> moves = new ArrayList<String>();
+        ArrayList<String> moves = new ArrayList<>();
         int count = 0;
         if ( isPieceOnScreen() ){
             for ( int i = 1; i < 8 && count < numMoves; i++ ){
@@ -343,7 +345,7 @@ public abstract class ChessGamePiece{
     protected ArrayList<String> calculateSouthWestMoves(
         ChessGameBoard board,
         int numMoves ){
-        ArrayList<String> moves = new ArrayList<String>();
+        ArrayList<String> moves = new ArrayList<>();
         int count = 0;
         if ( isPieceOnScreen() ){
             for ( int i = 1; i < 8 && count < numMoves; i++ ){
@@ -380,7 +382,7 @@ public abstract class ChessGamePiece{
     protected ArrayList<String> calculateSouthEastMoves(
         ChessGameBoard board,
         int numMoves ){
-        ArrayList<String> moves = new ArrayList<String>();
+        ArrayList<String> moves = new ArrayList<>();
         int count = 0;
         if ( isPieceOnScreen() ){
             for ( int i = 1; i < 8 && count < numMoves; i++ ){
@@ -425,7 +427,7 @@ public abstract class ChessGamePiece{
      * @return int 0 for a black piece, 1 for a white piece, -1 for an
      *         unassigned piece.
      */
-    public int getColorOfPiece(){
+    public PieceColorEnum getColorOfPiece(){
         return pieceColor;
     }
     // ----------------------------------------------------------
@@ -667,8 +669,8 @@ public abstract class ChessGamePiece{
                 ? null
                 : board.getCell( row, col ).getPieceOnSquare();
         if ( enemyPiece == null
-            || this.getColorOfPiece() == ChessGamePiece.UNASSIGNED
-            || enemyPiece.getColorOfPiece() == ChessGamePiece.UNASSIGNED ){
+            || this.getColorOfPiece() == PieceColorEnum.UNASSIGNED
+            || enemyPiece.getColorOfPiece() == PieceColorEnum.UNASSIGNED ){
             return false;
         }
         if ( this.getColorOfPiece() == ChessGamePiece.WHITE ){
