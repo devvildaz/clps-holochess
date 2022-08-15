@@ -20,17 +20,17 @@ import java.awt.event.MouseEvent;
  * @author Danielle Bushrow (dbushrow)
  * @version 2010.11.17
  */
-public class ChessGameEngine{ /*TODO: chess game engine as a server */
+public class ChessGameEngine{ /* PORHACER: chess game engine as a server */
     private ChessGamePiece currentPiece;
     private boolean        firstClick;
     
-    private ChessGameBoard board; /* TODO: chess game board as a client */
+    private ChessGameBoard board; /* PORHACER: chess game board as a client */
     private King           king1; /* get the king of the one player */
     private King           king2; /* get the king of the two player */
     
     
     private int            currentPlayer;
-    // private Object[] 	   players;
+
     private ChessGameLog    gameLog;
     
     // ----------------------------------------------------------
@@ -50,7 +50,7 @@ public class ChessGameEngine{ /*TODO: chess game engine as a server */
         this.king1 = (King)board.getCell( 7, 3 ).getPieceOnSquare();
         this.king2 = (King)board.getCell( 0, 3 ).getPieceOnSquare();
         gameLog.clearLog(); 
-        gameLog.addToLog( /* TODO: Inject Log Service */
+        gameLog.addToLog( /* PORHACER: Inject Log Service */
             "A new chess "
                 + "game has been started. Player 1 (white) will play "
                 + "against Player 2 (black). BEGIN!" );
@@ -129,18 +129,12 @@ public class ChessGameEngine{ /*TODO: chess game engine as a server */
         }
         if ( currentPlayer == 2 ) // black player
         {
-            if ( currentPiece.getColorOfPiece() == PieceColorEnum.BLACK ){
-                return true;
-            }
-            return false;
+        	return ( currentPiece.getColorOfPiece() == PieceColorEnum.BLACK );
         }
         else
         // white player
         {
-            if ( currentPiece.getColorOfPiece() == PieceColorEnum.WHITE ){
-                return true;
-            }
-            return false;
+        	return ( currentPiece.getColorOfPiece() == PieceColorEnum.WHITE );
         }
     }
     /**
