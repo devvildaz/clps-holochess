@@ -117,10 +117,10 @@ public class ChessGameEngine{
         }
         if ( currentPlayer == 2 ) // black player
         {
-            return ( currentPiece.getColorOfPiece() == ChessGamePiece.BLACK );
+            return ( currentPiece.getColorOfPiece() == PieceColorEnum.BLACK );
         }
         // white player
-        return ( currentPiece.getColorOfPiece() == ChessGamePiece.WHITE );
+        return ( currentPiece.getColorOfPiece() == PieceColorEnum.WHITE );
     }
     /**
      * Determines if the requested King is in check.

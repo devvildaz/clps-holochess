@@ -673,12 +673,12 @@ public abstract class ChessGamePiece{
             || enemyPiece.getColorOfPiece() == PieceColorEnum.UNASSIGNED ){
             return false;
         }
-        if ( this.getColorOfPiece() == ChessGamePiece.WHITE ){
-            return ( enemyPiece.getColorOfPiece() == ChessGamePiece.BLACK );
+        if ( this.getColorOfPiece() == PieceColorEnum.WHITE ){
+            return ( enemyPiece.getColorOfPiece() == PieceColorEnum.BLACK );
         }
         else
         {
-            return ( enemyPiece.getColorOfPiece() == ChessGamePiece.WHITE );
+            return ( enemyPiece.getColorOfPiece() == PieceColorEnum.WHITE );
         }
     }
     // ----------------------------------------------------------
@@ -690,10 +690,10 @@ public abstract class ChessGamePiece{
      */
     public ArrayList<ChessGamePiece> getCurrentAttackers( ChessGameBoard board ){
         ArrayList<ChessGamePiece> attackers = new ArrayList<>();
-        int enemyColor =
-            ( this.getColorOfPiece() == ChessGamePiece.BLACK )
-                ? ChessGamePiece.WHITE
-                : ChessGamePiece.BLACK;
+        PieceColorEnum enemyColor =
+            ( this.getColorOfPiece() == PieceColorEnum.BLACK )
+                ? PieceColorEnum.WHITE
+                : PieceColorEnum.BLACK;
         this.updatePossibleMoves( board );
         for ( int i = 0; i < board.getCells().length; i++ ){
             for ( int j = 0; j < board.getCells()[0].length; j++ ){

@@ -3,7 +3,6 @@ package org.clps.holochess;
 import java.awt.Component;
 import java.awt.event.*;
 import javax.swing.*;
-import java.util.*;
 // -------------------------------------------------------------------------
 /**
  * Represents the north menu-bar that contains various controls for the game.
