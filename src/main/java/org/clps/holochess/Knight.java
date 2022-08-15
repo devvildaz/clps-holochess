@@ -94,28 +94,4 @@ public class Knight
         }
         return moves;
     }
-    /**
-     * Creates an icon for this piece depending on the piece's color.
-     *
-     * @return ImageIcon the ImageIcon representation of this piece.
-     */
-    @Override
-    public ImageIcon createImageByPieceType(){
-        if ( getColorOfPiece() == PieceColorEnum.WHITE ){
-            return new ImageIcon(
-                getClass().getResource("/chessImages/WhiteKnight.gif")
-            );            
-        }
-        else if ( getColorOfPiece() == PieceColorEnum.BLACK ){
-            return new ImageIcon(
-                getClass().getResource("/chessImages/BlackKnight.gif")
-            );            
-        }
-        else
-        {
-            return new ImageIcon(
-                getClass().getResource("/chessImages/default-Unassigned.gif")
-            );            
-        }
-    }
 }

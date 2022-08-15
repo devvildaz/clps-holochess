@@ -50,28 +50,4 @@ public class Queen
         allMoves.addAll( calculateEastMoves( board, 8 ) );
         return allMoves;
     }
-    /**
-     * Creates an icon for this piece depending on the piece's color.
-     *
-     * @return ImageIcon the ImageIcon representation of this piece.
-     */
-    @Override
-    public ImageIcon createImageByPieceType(){
-        if ( getColorOfPiece() == PieceColorEnum.WHITE ){
-            return new ImageIcon(
-                getClass().getResource("/chessImages/WhiteQueen.gif")
-            );            
-        }
-        else if ( getColorOfPiece() == PieceColorEnum.BLACK ){
-            return new ImageIcon(
-                getClass().getResource("/chessImages/BlackQueen.gif")
-            );            
-        }
-        else
-        {
-            return new ImageIcon(
-                getClass().getResource("/chessImages/default-Unassigned.gif")
-            ); 
-        }
-    }
 }
