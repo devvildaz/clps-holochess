@@ -2,7 +2,6 @@ package org.clps.holochess;
 
 import org.clps.holochess.enumeration.PieceColorEnum;
 
-import javax.swing.ImageIcon;
 import java.util.ArrayList;
 // -------------------------------------------------------------------------
 /**

@@ -412,12 +412,12 @@ public abstract class ChessGamePiece{
      *         for each piece.
      */
     public ImageIcon createImageByPieceType() {
-    	if ( getColorOfPiece() == ChessGamePiece.WHITE ){
+    	if ( getColorOfPiece() == PieceColorEnum.WHITE ){
             return new ImageIcon(
                 getClass().getResource("/chessImages/White"+this.getClass().getSimpleName()+".gif")
             );            
         }
-        else if ( getColorOfPiece() == ChessGamePiece.BLACK ){
+        else if ( getColorOfPiece() == PieceColorEnum.BLACK ){
             return new ImageIcon(
                 getClass().getResource("/chessImages/Black"+this.getClass().getSimpleName()+".gif")
             );            

@@ -3,7 +3,6 @@ package org.clps.holochess;
 import org.clps.holochess.enumeration.PieceColorEnum;
 
 import java.util.ArrayList;
-import javax.swing.ImageIcon;
 // -------------------------------------------------------------------------
 /**
  * Class to represent the Bishop piece.
