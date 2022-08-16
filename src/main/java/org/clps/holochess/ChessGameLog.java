@@ -1,6 +1,11 @@
 package org.clps.holochess;
 
 import javax.swing.JTextArea;
+
+import org.clps.holochess.modules.IChessGameLog;
+
+import com.google.inject.Inject;
+
 import javax.swing.JScrollPane;
 import java.util.Date;
 // -------------------------------------------------------------------------
@@ -14,12 +19,18 @@ import java.util.Date;
  * @version 2010.11.17
  */
 public class ChessGameLog
-    extends JScrollPane{
-    private JTextArea textArea;
+    extends JScrollPane implements IChessGameLog{
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private JTextArea textArea;
     // ----------------------------------------------------------
     /**
      * Create a new ChessGameLog object.
      */
+
+	
     public ChessGameLog(){
         super(
             new JTextArea( "", 5, 30 ),

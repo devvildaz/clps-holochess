@@ -1,6 +1,7 @@
 package org.clps.holochess;
 
-import javax.swing.ImageIcon;
+import org.clps.holochess.enumeration.PieceColorEnum;
+
 import java.util.ArrayList;
 // -------------------------------------------------------------------------
 /**
@@ -25,7 +26,7 @@ public class Knight
      * @param color
      *            either GamePiece.WHITE, BLACK, or UNASSIGNED
      */
-    public Knight( ChessGameBoard board, int row, int col, int color ){
+    public Knight( ChessGameBoard board, int row, int col, PieceColorEnum color ){
         super( board, row, col, color );
     }
     /**
