@@ -59,6 +59,6 @@ public class King
      * @return true if checked, false if not checked
      */
     public boolean isChecked( ChessGameBoard board ){
-        return getCurrentAttackers( board ).size() > 0;
+        return !getCurrentAttackers( board ).isEmpty();
     }
 }

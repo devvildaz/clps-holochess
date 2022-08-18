@@ -3,7 +3,6 @@ package org.clps.holochess;
 import org.clps.holochess.enumeration.PieceColorEnum;
 
 import java.util.ArrayList;
-// import java.awt.Color;
 // -------------------------------------------------------------------------
 /**
  * Represents a Queen game piece.
