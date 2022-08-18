@@ -38,8 +38,7 @@ public class AppModules extends AbstractModule{
 			  ChessGameEngine.class.getConstructor(classes)
 		  ).in(Scopes.SINGLETON);;
 	} catch (NoSuchMethodException | SecurityException e) {
-		// TODO Auto-generated catch block
-		e.printStackTrace();
+		System.out.println("Game Engine no se inicializado");
 	}
    } 
 }

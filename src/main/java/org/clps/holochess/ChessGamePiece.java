@@ -278,29 +278,7 @@ public abstract class ChessGamePiece{
     protected ArrayList<String> calculateNorthWestMoves(
         ChessGameBoard board,
         int numMoves ){
-        ArrayList<String> moves = new ArrayList<>();
-        int count = 0;
-        if ( isPieceOnScreen() ){
-            for ( int i = 1; i < 8 && count < numMoves; i++ ){
-            	int targetRow = pieceRow - i;
-            	int targetCol = pieceColumn - i;
-                if ( isOnScreen( targetRow, targetCol )) {
-                	ChessGamePiece currentPiece = board.getCell( targetRow, targetCol ).getPieceOnSquare();
-                	boolean currPieceIsEnemy = isEnemy( board, targetRow, targetCol);
-                	if(
-            			currentPiece == null  ||
-            			currPieceIsEnemy
-        			) {
-                		moves.add( ( targetRow ) + "," + ( targetCol ) );
-                        count++;
-                	}
-                	if(currentPiece != null) {
-                		break;
-                	}
-                }
-            }
-        }
-        return moves;
+    	return calculateDiagonalMoves(board, numMoves, DiagonalStates.NORTHWEST);
     }
     // ----------------------------------------------------------
     /**
@@ -316,29 +294,7 @@ public abstract class ChessGamePiece{
     protected ArrayList<String> calculateNorthEastMoves(
         ChessGameBoard board,
         int numMoves ){
-        ArrayList<String> moves = new ArrayList<>();
-        int count = 0;
-        if ( isPieceOnScreen() ){
-            for ( int i = 1; i < 8 && count < numMoves; i++ ){
-            	int targetRow = pieceRow + i;
-            	int targetCol = pieceColumn - i;
-                if ( isOnScreen( targetRow, targetCol )) {
-                	ChessGamePiece currentPiece = board.getCell( targetRow, targetCol ).getPieceOnSquare();
-                	boolean currPieceIsEnemy = isEnemy( board, targetRow, targetCol);
-                	if(
-            			currentPiece == null  ||
-            			currPieceIsEnemy
-        			) {
-                		moves.add( ( targetRow ) + "," + ( targetCol ) );
-                        count++;
-                	}
-                	if(currentPiece != null) {
-                		break;
-                	}
-                }
-            }
-        }
-        return moves;
+    	return calculateDiagonalMoves(board, numMoves, DiagonalStates.NORTHEAST);
     }
     // ----------------------------------------------------------
     /**
@@ -354,12 +310,52 @@ public abstract class ChessGamePiece{
     protected ArrayList<String> calculateSouthWestMoves(
         ChessGameBoard board,
         int numMoves ){
+    	return calculateDiagonalMoves(board, numMoves, DiagonalStates.SOUTHWEST);
+    }
+    // ----------------------------------------------------------
+    /**
+     * Calculates and returns moves in the south-east direction relative to this
+     * piece.
+     *
+     * @param board
+     *            the board to calculate the moves on
+     * @param numMoves
+     *            the number of moves to calculate
+     * @return ArrayList<String> the moves in this direction
+     */
+     enum DiagonalStates {
+    	NORTHWEST,
+    	NORTHEAST,
+    	SOUTHEAST,
+    	SOUTHWEST,
+    }
+    
+    protected ArrayList<String> calculateDiagonalMoves(ChessGameBoard board, int numMoves, DiagonalStates direction) {
         ArrayList<String> moves = new ArrayList<>();
         int count = 0;
+        
         if ( isPieceOnScreen() ){
             for ( int i = 1; i < 8 && count < numMoves; i++ ){
-            	int targetRow = pieceRow - i;
-            	int targetCol = pieceColumn + i;
+            	int targetRow = 0;
+                int targetCol = 0;
+            	switch(direction) {
+            		case NORTHWEST:
+            			targetRow = pieceRow - i;
+            			targetCol = pieceColumn - i;
+            			break;
+            		case NORTHEAST:
+            			targetRow = pieceRow + i;
+            			targetCol = pieceColumn - i;
+            			break;
+            		case SOUTHEAST:
+            			targetRow = pieceRow + i;
+            			targetCol = pieceColumn + i;
+            			break;
+            		case SOUTHWEST:
+            			targetRow = pieceRow - i;
+            			targetCol = pieceColumn + i;
+            			break;
+            	}
                 if ( isOnScreen( targetRow, targetCol )) {
                 	ChessGamePiece currentPiece = board.getCell( targetRow, targetCol ).getPieceOnSquare();
                 	boolean currPieceIsEnemy = isEnemy( board, targetRow, targetCol);
@@ -378,43 +374,11 @@ public abstract class ChessGamePiece{
         }
         return moves;
     }
-    // ----------------------------------------------------------
-    /**
-     * Calculates and returns moves in the south-east direction relative to this
-     * piece.
-     *
-     * @param board
-     *            the board to calculate the moves on
-     * @param numMoves
-     *            the number of moves to calculate
-     * @return ArrayList<String> the moves in this direction
-     */
+    
     protected ArrayList<String> calculateSouthEastMoves(
         ChessGameBoard board,
         int numMoves ){
-        ArrayList<String> moves = new ArrayList<>();
-        int count = 0;
-        if ( isPieceOnScreen() ){
-            for ( int i = 1; i < 8 && count < numMoves; i++ ){
-            	int targetRow = pieceRow + i;
-            	int targetCol = pieceColumn + i;
-                if ( isOnScreen( targetRow, targetCol )) {
-                	ChessGamePiece currentPiece = board.getCell( targetRow, targetCol ).getPieceOnSquare();
-                	boolean currPieceIsEnemy = isEnemy( board, targetRow, targetCol);
-                	if(
-            			currentPiece == null  ||
-            			currPieceIsEnemy
-        			) {
-                		moves.add( ( targetRow ) + "," + ( targetCol ) );
-                        count++;
-                	}
-                	if(currentPiece != null) {
-                		break;
-                	}
-                }
-            }
-        }
-        return moves;
+    	return calculateDiagonalMoves(board, numMoves, DiagonalStates.SOUTHEAST);
     }
     /**
      * Creates the ImageIcon by the color of the piece.
