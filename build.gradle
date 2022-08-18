@@ -1,6 +1,9 @@
-apply plugin: 'java'
-apply plugin: 'application'
-apply plugin: 'eclipse'
+plugins {
+	id 'java'
+	id 'application'
+	id 'eclipse'
+	id "org.sonarqube" version "3.4.0.2513"
+}
 
 sourceCompatibility = 1.8
 
@@ -20,6 +23,15 @@ jar {
 	}
     
     
+}
+
+sonarqube {
+    properties {
+        property "sonar.sourceEncoding", "UTF-8"
+        property "sonar.projectKey", "holochess"
+        property "sonar.host.url", "http://localhost:9000"
+        property "sonar.login",  "sqp_932b6533ad03af046a45e743764aee61c3d5d9cd"
+    }
 }
 
 tasks.named('test') {

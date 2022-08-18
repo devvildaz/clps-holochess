@@ -4,12 +4,6 @@ import java.awt.Color;
 import java.util.ArrayList;
 import javax.swing.ImageIcon;
 
-import org.clps.holochess.modules.AppModules;
-
-import com.google.inject.Binding;
-import com.google.inject.Guice;
-import com.google.inject.Injector;
-import com.google.inject.Provider;
 // -------------------------------------------------------------------------
 /**
  * Abstract class that is used to represent a game piece on the chess board.
