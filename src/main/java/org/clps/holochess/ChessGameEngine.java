@@ -121,6 +121,7 @@ public class ChessGameEngine{ /*TODO: chess game engine as a server */
      * @return boolean true if the piece is valid, false otherwise
      */
     private boolean selectedPieceIsValid(){
+    	
         if ( currentPiece == null ) // user tried to select an empty square
         {
             return false;
@@ -136,6 +137,7 @@ public class ChessGameEngine{ /*TODO: chess game engine as a server */
         // white player
         {
             if ( currentPiece.getColorOfPiece() == ChessGamePiece.WHITE ){
+            	
                 return true;
             }
             return false;

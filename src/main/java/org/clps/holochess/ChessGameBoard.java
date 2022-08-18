@@ -3,6 +3,7 @@ package org.clps.holochess;
 import java.util.ArrayList;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.io.Serializable;
 import java.awt.Color;
 import javax.swing.JPanel;
 import java.awt.GridLayout;
@@ -17,7 +18,11 @@ import java.awt.GridLayout;
  * @version 2010.11.17
  */
 public class ChessGameBoard extends JPanel{
-    private BoardSquare[][] chessCells;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -97157864928335977L;
+	private BoardSquare[][] chessCells;
     private BoardListener   listener;
     // ----------------------------------------------------------
     /**
@@ -50,6 +55,7 @@ public class ChessGameBoard extends JPanel{
         if ( validateCoordinates( row, col ) ){
             return chessCells[row][col];
         }
+        
         return null;
     }
     // ----------------------------------------------------------
@@ -234,9 +240,13 @@ public class ChessGameBoard extends JPanel{
      * @version 2010.11.16
      */
     private class BoardListener
-        implements MouseListener
+        implements MouseListener, Serializable
     {
         /**
+		 * 
+		 */
+		private static final long serialVersionUID = 1L;
+		/**
          * Do an action when the left mouse button is clicked.
          *
          * @param e

@@ -3,6 +3,13 @@ package org.clps.holochess;
 import java.awt.Color;
 import java.util.ArrayList;
 import javax.swing.ImageIcon;
+
+import org.clps.holochess.modules.AppModules;
+
+import com.google.inject.Binding;
+import com.google.inject.Guice;
+import com.google.inject.Injector;
+import com.google.inject.Provider;
 // -------------------------------------------------------------------------
 /**
  * Abstract class that is used to represent a game piece on the chess board.
@@ -19,6 +26,7 @@ public abstract class ChessGamePiece{
     private boolean             skipMoveGeneration;
     private int                 pieceColor;
     private ImageIcon           pieceImage;
+    // private ChessGameEngine 	engine;
     /**
      * The list of possible moves for this piece. Updated when actions involving
      * this piece occur. (created, moved, selected, etc)
@@ -89,6 +97,7 @@ public abstract class ChessGamePiece{
      * @param pieceColor
      *            either GamePiece.BLACK, WHITE, or UNASSIGNED
      */
+    // TODO: Inject the game engine
     public ChessGamePiece(
         ChessGameBoard board,
         int row,
@@ -106,6 +115,9 @@ public abstract class ChessGamePiece{
         if ( !this.skipMoveGeneration ){
             possibleMoves = calculatePossibleMoves( board );
         }
+        
+        //Injector injector = Guice.createInjector(new AppModules());
+        //ChessGameEngine engine = injector.getProvider(ChessGameEngine.class).get(); 
     }
     // ----------------------------------------------------------
     /**
@@ -352,6 +364,7 @@ public abstract class ChessGamePiece{
                         pieceColumn - i ).getPieceOnSquare() == null ) ){
                     moves.add( ( pieceRow + i ) + "," + ( pieceColumn - i ) );
                     count++;
+                    // continue
                 }
                 else if ( isEnemy( board, pieceRow + i, pieceColumn - i ) ){
                     moves.add( ( pieceRow + i ) + "," + ( pieceColumn - i ) );
@@ -475,8 +488,9 @@ public abstract class ChessGamePiece{
             board.clearCell( pieceRow, pieceColumn );
             if ( isEnemy( board, row, col ) ){
                 ChessGraveyard graveyard;
-                ChessGameEngine gameEngine =
+                ChessGameEngine gameEngine = 
                     ( (ChessPanel)board.getParent() ).getGameEngine();
+                		//injector.getProvider(ChessGameEngine.class).get();
                 if ( gameEngine.getCurrentPlayer() == 1 ){
                     graveyard =
                         ( (ChessPanel)board.getParent() ).getGraveyard( 2 );
@@ -538,11 +552,18 @@ public abstract class ChessGamePiece{
         ChessGameBoard board,
         int row,
         int col ){
+    	
         updatePossibleMoves( board );
+        
         ChessGamePiece oldPieceOnOtherSquare =
             board.getCell( row, col ).getPieceOnSquare();
+        
+        //Injector injector = Guice.createInjector(ChessMain.modules);
+        //Binding<ChessGameEngine> binding = injector.getBinding(ChessGameEngine.class);
         ChessGameEngine engine =
             ( (ChessPanel)board.getParent() ).getGameEngine();
+        	//injector.getProvider(ChessGameEngine.class).get();
+        
         int oldRow = pieceRow;
         int oldColumn = pieceColumn;
         board.clearCell( pieceRow, pieceColumn ); // move us off

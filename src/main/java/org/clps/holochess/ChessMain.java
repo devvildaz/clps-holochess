@@ -24,12 +24,15 @@ public class ChessMain{
      * @param args
      *            command line arguments, not used
      */
+	 
+	
     public static void main( String[] args ){
     	/* Create new windows container */
         JFrame frame = new JFrame( "YetAnotherChessGame 1.0" );
         /* Set the close event */
         frame.setDefaultCloseOperation( JFrame.EXIT_ON_CLOSE );
         /* Add chess panel for view the game */
+        
         Injector injector = Guice.createInjector(new AppModules());
         ChessPanel panel = injector.getInstance(ChessPanel.class);
         frame.getContentPane().add(panel);
