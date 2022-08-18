@@ -14,8 +14,6 @@ import java.util.ArrayList;
  */
 public class Rook
     extends ChessGamePiece{
-    // private ArrayList<String> possibleMoves;
-    // ----------------------------------------------------------
     /**
      * Create a new Rook object.
      *
@@ -38,7 +36,7 @@ public class Rook
      */
     @Override
     protected ArrayList<String> calculatePossibleMoves( ChessGameBoard board ){
-        ArrayList<String> allMoves = new ArrayList<String>();
+        ArrayList<String> allMoves = new ArrayList<>();
         allMoves.addAll( calculateNorthMoves( board, 8 ) );
         allMoves.addAll( calculateSouthMoves( board, 8 ) );
         allMoves.addAll( calculateWestMoves( board, 8 ) );
