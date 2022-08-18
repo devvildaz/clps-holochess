@@ -4,6 +4,7 @@ import org.clps.holochess.enumeration.PieceColorEnum;
 
 import java.util.ArrayList;
 import java.util.function.Function;
+import java.util.function.IntUnaryOperator;
 // -------------------------------------------------------------------------
 /**
  * Represents a Pawn game piece. Unique in that it can move two locations on its
@@ -77,12 +78,12 @@ public class Pawn
      */
     @Override
     protected ArrayList<String> calculatePossibleMoves( ChessGameBoard board ){
-    	Function<Integer, Integer> navOp = PieceColorEnum.WHITE == this.getColorOfPiece() ? 
+    	IntUnaryOperator navOp = PieceColorEnum.WHITE == this.getColorOfPiece() ? 
     			(x) -> x -1 : (x) -> x+1;
     	
         ArrayList<String> moves = new ArrayList<String>();
         if ( isPieceOnScreen() ){
-            int currRow = navOp.apply(pieceRow);
+            int currRow = navOp.applyAsInt(pieceRow);
             int count = 1;
             int maxIter =  Boolean.compare(notMoved, true) + 2;
             // check for normal moves
@@ -95,15 +96,15 @@ public class Pawn
                 {
                     break;
                 }
-                currRow = navOp.apply(currRow);
+                currRow = navOp.applyAsInt(currRow);
                 count++;
             }
             
-			if ( isEnemy( board, navOp.apply(pieceRow), pieceColumn - 1 ) ){
-    			moves.add( ( navOp.apply(pieceRow) ) + "," + ( pieceColumn - 1 ) );
+			if ( isEnemy( board, navOp.applyAsInt(pieceRow), pieceColumn - 1 ) ){
+    			moves.add( ( navOp.applyAsInt(pieceRow) ) + "," + ( pieceColumn - 1 ) );
 			}
-            if ( isEnemy( board, navOp.apply(pieceRow), pieceColumn + 1 ) ){
-                moves.add( ( navOp.apply(pieceRow) ) + "," + ( pieceColumn + 1 ) );
+            if ( isEnemy( board, navOp.applyAsInt(pieceRow), pieceColumn + 1 ) ){
+                moves.add( ( navOp.applyAsInt(pieceRow) ) + "," + ( pieceColumn + 1 ) );
             }
         }
         return moves;
