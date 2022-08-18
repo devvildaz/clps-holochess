@@ -123,6 +123,7 @@ public class ChessGameEngine{ /* PORHACER: chess game engine as a server */
      * @return boolean true if the piece is valid, false otherwise
      */
     private boolean selectedPieceIsValid(){
+    	
         if ( currentPiece == null ) // user tried to select an empty square
         {
             return false;

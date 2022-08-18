@@ -139,18 +139,19 @@ public abstract class ChessGamePiece{
         int count = 0;
         if ( isPieceOnScreen() ){
             for ( int i = pieceRow + 1; i < 8 && count < numMoves; i++ ){
-                if ( ( board.getCell( i, pieceColumn ).getPieceOnSquare()
-                    == null || isEnemy( board, i, pieceColumn ) ) ){
+            	ChessGamePiece currentPiece = board.getCell( i, pieceColumn ).getPieceOnSquare(); 
+            	boolean currPieceIsEnemy = isEnemy( board, i, pieceColumn );
+            	
+            	// add if the square is empty or there is a enemy piece
+                if ( currentPiece == null || currPieceIsEnemy ) {
                     moves.add( i + "," + pieceColumn );
                     count++;
-                    if ( isEnemy( board, i, pieceColumn ) ){
-                        break;
-                    }
                 }
-                else
-                {
+                // stop when there is a piece 
+                if ( currentPiece != null ){
                     break;
                 }
+                
             }
         }
         return moves;
@@ -173,18 +174,20 @@ public abstract class ChessGamePiece{
         int count = 0;
         if ( isPieceOnScreen() ){
             for ( int i = pieceRow - 1; i >= 0 && count < numMoves; i-- ){
-                if ( ( board.getCell( i, pieceColumn ).getPieceOnSquare()
-                    == null || isEnemy( board, i, pieceColumn ) ) ){
+            	
+            	ChessGamePiece currentPiece = board.getCell( i, pieceColumn ).getPieceOnSquare(); 
+            	boolean currPieceIsEnemy = isEnemy( board, i, pieceColumn );
+            	
+                if ( ( currentPiece
+                    == null || currPieceIsEnemy ) ){
                     moves.add( i + "," + pieceColumn );
                     count++;
-                    if ( isEnemy( board, i, pieceColumn ) ){
-                        break;
-                    }
                 }
-                else
-                {
-                    break;
+                
+                if(currentPiece != null) {
+                	break;
                 }
+                
             }
         }
         return moves;
@@ -205,19 +208,22 @@ public abstract class ChessGamePiece{
         int numMoves ){
         ArrayList<String> moves = new ArrayList<String>();
         int count = 0;
+        
+        
+        
         if ( isPieceOnScreen() ){
             for ( int i = pieceColumn + 1; i < 8 && count < numMoves; i++ ){
-                if ( ( board.getCell( pieceRow, i ).getPieceOnSquare()
-                    == null || isEnemy( board, pieceRow, i ) ) ){
+            	
+            	ChessGamePiece currentPiece = board.getCell( pieceRow, i ).getPieceOnSquare(); 
+            	boolean currPieceIsEnemy = isEnemy( board, pieceRow, i);
+            	
+                if ( currentPiece
+                    == null || currPieceIsEnemy ){
                     moves.add( pieceRow + "," + i );
                     count++;
-                    if ( isEnemy( board, pieceRow, i ) ){
-                        break;
-                    }
                 }
-                else
-                {
-                    break;
+                if (currentPiece != null) {
+                	break;
                 }
             }
         }
@@ -241,18 +247,14 @@ public abstract class ChessGamePiece{
         int count = 0;
         if ( isPieceOnScreen() ){
             for ( int i = pieceColumn - 1; i >= 0 && count < numMoves; i-- ){
-                if ( ( board.getCell(pieceRow, i ).getPieceOnSquare()
-                    == null || isEnemy( board, pieceRow, i ) ) ){
+            	ChessGamePiece currentPiece = board.getCell( pieceRow, i).getPieceOnSquare(); 
+            	boolean currPieceIsEnemy = isEnemy( board, pieceRow, i );
+                if ( currentPiece
+                    == null ||  currPieceIsEnemy ){
                     moves.add( pieceRow + "," + i );
                     count++;
-                    if ( isEnemy( board, pieceRow, i ) ){
-                        break;
-                    }
                 }
-                else
-                {
-                    break;
-                }
+                if(currentPiece != null ) break;
             }
         }
         return moves;
@@ -275,20 +277,21 @@ public abstract class ChessGamePiece{
         int count = 0;
         if ( isPieceOnScreen() ){
             for ( int i = 1; i < 8 && count < numMoves; i++ ){
-                if ( isOnScreen( pieceRow - i, pieceColumn - i )
-                    && ( board.getCell( pieceRow - i,
-                        pieceColumn - i ).getPieceOnSquare() == null ) ){
-                    moves.add( ( pieceRow - i ) + "," + ( pieceColumn - i ) );
-                    count++;
-                }
-                else if ( isEnemy( board, pieceRow - i, pieceColumn - i ) ){
-                    moves.add( ( pieceRow - i ) + "," + ( pieceColumn - i ) );
-                    count++;
-                    break;
-                }
-                else
-                {
-                    break;
+            	int targetRow = pieceRow - i;
+            	int targetCol = pieceColumn - i;
+                if ( isOnScreen( targetRow, targetCol )) {
+                	ChessGamePiece currentPiece = board.getCell( targetRow, targetCol ).getPieceOnSquare();
+                	boolean currPieceIsEnemy = isEnemy( board, targetRow, targetCol);
+                	if(
+            			currentPiece == null  ||
+            			currPieceIsEnemy
+        			) {
+                		moves.add( ( targetRow ) + "," + ( targetCol ) );
+                        count++;
+                	}
+                	if(currentPiece != null) {
+                		break;
+                	}
                 }
             }
         }
@@ -312,20 +315,21 @@ public abstract class ChessGamePiece{
         int count = 0;
         if ( isPieceOnScreen() ){
             for ( int i = 1; i < 8 && count < numMoves; i++ ){
-                if ( isOnScreen( pieceRow - i, pieceColumn + i )
-                    && ( board.getCell( pieceRow - i,
-                        pieceColumn + i).getPieceOnSquare() == null ) ){
-                    moves.add( ( pieceRow - i ) + "," + ( pieceColumn + i ) );
-                    count++;
-                }
-                else if ( isEnemy( board, pieceRow - i, pieceColumn + i ) ){
-                    moves.add( ( pieceRow - i ) + "," + ( pieceColumn + i ) );
-                    count++;
-                    break;
-                }
-                else
-                {
-                    break;
+            	int targetRow = pieceRow + i;
+            	int targetCol = pieceColumn - i;
+                if ( isOnScreen( targetRow, targetCol )) {
+                	ChessGamePiece currentPiece = board.getCell( targetRow, targetCol ).getPieceOnSquare();
+                	boolean currPieceIsEnemy = isEnemy( board, targetRow, targetCol);
+                	if(
+            			currentPiece == null  ||
+            			currPieceIsEnemy
+        			) {
+                		moves.add( ( targetRow ) + "," + ( targetCol ) );
+                        count++;
+                	}
+                	if(currentPiece != null) {
+                		break;
+                	}
                 }
             }
         }
@@ -349,20 +353,21 @@ public abstract class ChessGamePiece{
         int count = 0;
         if ( isPieceOnScreen() ){
             for ( int i = 1; i < 8 && count < numMoves; i++ ){
-                if ( isOnScreen( pieceRow + i, pieceColumn - i )
-                    && ( board.getCell( pieceRow + i,
-                        pieceColumn - i ).getPieceOnSquare() == null ) ){
-                    moves.add( ( pieceRow + i ) + "," + ( pieceColumn - i ) );
-                    count++;
-                }
-                else if ( isEnemy( board, pieceRow + i, pieceColumn - i ) ){
-                    moves.add( ( pieceRow + i ) + "," + ( pieceColumn - i ) );
-                    count++;
-                    break;
-                }
-                else
-                {
-                    break;
+            	int targetRow = pieceRow - i;
+            	int targetCol = pieceColumn + i;
+                if ( isOnScreen( targetRow, targetCol )) {
+                	ChessGamePiece currentPiece = board.getCell( targetRow, targetCol ).getPieceOnSquare();
+                	boolean currPieceIsEnemy = isEnemy( board, targetRow, targetCol);
+                	if(
+            			currentPiece == null  ||
+            			currPieceIsEnemy
+        			) {
+                		moves.add( ( targetRow ) + "," + ( targetCol ) );
+                        count++;
+                	}
+                	if(currentPiece != null) {
+                		break;
+                	}
                 }
             }
         }
@@ -386,20 +391,21 @@ public abstract class ChessGamePiece{
         int count = 0;
         if ( isPieceOnScreen() ){
             for ( int i = 1; i < 8 && count < numMoves; i++ ){
-                if ( isOnScreen( pieceRow + i, pieceColumn + i )
-                    && ( board.getCell( pieceRow + i,
-                        pieceColumn + i ).getPieceOnSquare() == null ) ){
-                    moves.add( ( pieceRow + i ) + "," + ( pieceColumn + i ) );
-                    count++;
-                }
-                else if ( isEnemy( board, pieceRow + i, pieceColumn + i ) ){
-                    moves.add( ( pieceRow + i ) + "," + ( pieceColumn + i ) );
-                    count++;
-                    break;
-                }
-                else
-                {
-                    break;
+            	int targetRow = pieceRow + i;
+            	int targetCol = pieceColumn + i;
+                if ( isOnScreen( targetRow, targetCol )) {
+                	ChessGamePiece currentPiece = board.getCell( targetRow, targetCol ).getPieceOnSquare();
+                	boolean currPieceIsEnemy = isEnemy( board, targetRow, targetCol);
+                	if(
+            			currentPiece == null  ||
+            			currPieceIsEnemy
+        			) {
+                		moves.add( ( targetRow ) + "," + ( targetCol ) );
+                        count++;
+                	}
+                	if(currentPiece != null) {
+                		break;
+                	}
                 }
             }
         }
@@ -488,7 +494,7 @@ public abstract class ChessGamePiece{
             board.clearCell( pieceRow, pieceColumn );
             if ( isEnemy( board, row, col ) ){
                 ChessGraveyard graveyard;
-                ChessGameEngine gameEngine =
+                ChessGameEngine gameEngine = 
                     ( (ChessPanel)board.getParent() ).getGameEngine();
                 if ( gameEngine.getCurrentPlayer() == 1 ){
                     graveyard =
@@ -551,11 +557,15 @@ public abstract class ChessGamePiece{
         ChessGameBoard board,
         int row,
         int col ){
+    	
         updatePossibleMoves( board );
+        
         ChessGamePiece oldPieceOnOtherSquare =
             board.getCell( row, col ).getPieceOnSquare();
+        
         ChessGameEngine engine =
             ( (ChessPanel)board.getParent() ).getGameEngine();
+        
         int oldRow = pieceRow;
         int oldColumn = pieceColumn;
         board.clearCell( pieceRow, pieceColumn ); // move us off

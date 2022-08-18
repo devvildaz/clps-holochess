@@ -41,20 +41,22 @@ public class ChessPanel
      */
    
 	@Inject
-    public ChessPanel(@Named("GameLog") ChessGameLog gameLog, @Named("GameBoard") ChessGameBoard board){
+    public ChessPanel(@Named("GameLog") ChessGameLog log, @Named("GameBoard") ChessGameBoard board, @Named("GameEngine") ChessGameEngine gameEngine){
         this.setLayout( new BorderLayout() );
         menuBar = new ChessMenuBar(); // instatiate menu bar
         gameBoard = board; // instatiate game board (state)
-        this.gameLog = new ChessGameLog(); // instatiate game log
+        //gameLog = new ChessGameLog(); // instatiate game log
+        gameLog = log;
         playerOneGraveyard = new ChessGraveyard( "Player 1's graveyard" ); // create the one player side 
         playerTwoGraveyard = new ChessGraveyard( "Player 2's graveyard" ); // create the two player side
         this.add( menuBar, BorderLayout.NORTH ); /* set the position */
         this.add( gameBoard, BorderLayout.CENTER ); /* set the position */
-        this.add( this.gameLog, BorderLayout.SOUTH ); /* set the position */
+        this.add( gameLog, BorderLayout.SOUTH ); /* set the position */
         this.add( playerOneGraveyard, BorderLayout.WEST ); /* set the position */
         this.add( playerTwoGraveyard, BorderLayout.EAST ); /* set the position */
         this.setPreferredSize( new Dimension( 800, 600 ) ); /* set the default dimensions */
-        gameEngine = new ChessGameEngine(gameLog, board); // start the game
+        this.gameEngine = gameEngine;
+        //gameEngine = new ChessGameEngine(gameLog, gameBoard); // start the game
     }
     // ----------------------------------------------------------
     /**

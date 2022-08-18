@@ -3,6 +3,7 @@ package org.clps.holochess;
 import org.clps.holochess.enumeration.PieceColorEnum;
 
 import java.util.ArrayList;
+import java.util.function.Function;
 // -------------------------------------------------------------------------
 /**
  * Represents a Pawn game piece. Unique in that it can move two locations on its
@@ -63,6 +64,9 @@ public class Pawn
         }
         return false;
     }
+    
+    
+    
     /**
      * Calculates the possible moves for this piece. These are ALL the possible
      * moves, including illegal (but at the same time valid) moves.
@@ -73,49 +77,33 @@ public class Pawn
      */
     @Override
     protected ArrayList<String> calculatePossibleMoves( ChessGameBoard board ){
+    	Function<Integer, Integer> navOp = PieceColorEnum.WHITE == this.getColorOfPiece() ? 
+    			x -> x -1 : x -> x+1;
+    	
         ArrayList<String> moves = new ArrayList<>();
         if ( isPieceOnScreen() ){
-            int currRow =
-                getColorOfPiece() == PieceColorEnum.WHITE
-                    ? ( pieceRow - 1 )
-                    : ( pieceRow + 1 );
+            int currRow = navOp.apply(pieceRow);
             int count = 1;
-            int maxIter = notMoved ? 2 : 1;
+            int maxIter =  Boolean.compare(notMoved, true) + 2;
             // check for normal moves
             while ( count <= maxIter ){ // only loop while we have open slots and have not passed our
               // limit
-                if ( isOnScreen( currRow, pieceColumn )
-                    && board.getCell( currRow,
-                        pieceColumn ).getPieceOnSquare() == null ){
+                if ( isOnScreen( currRow, pieceColumn ) && board.getCell( currRow, pieceColumn ).getPieceOnSquare() == null ){
                     moves.add( currRow + "," + pieceColumn );
                 }
                 else
                 {
                     break;
                 }
-                currRow =
-                    ( getColorOfPiece() == PieceColorEnum.WHITE )
-                        ? ( currRow - 1 )
-                        : ( currRow + 1 );
+                currRow = navOp.apply(currRow);
                 count++;
             }
-            // check for enemy capture points
-            if ( getColorOfPiece() == PieceColorEnum.WHITE ){
-                if ( isEnemy( board, pieceRow - 1, pieceColumn - 1 ) ){
-                    moves.add( ( pieceRow - 1 ) + "," + ( pieceColumn - 1 ) );
-                }
-                if ( isEnemy( board, pieceRow - 1, pieceColumn + 1 ) ){
-                    moves.add( ( pieceRow - 1 ) + "," + ( pieceColumn + 1 ) );
-                }
+            
+            if ( isEnemy( board, navOp.apply(pieceRow), pieceColumn - 1 ) ){
+                moves.add( ( navOp.apply(pieceRow) ) + "," + ( pieceColumn - 1 ) );
             }
-            else
-            {
-                if ( isEnemy( board, pieceRow + 1, pieceColumn - 1 ) ){
-                    moves.add( ( pieceRow + 1 ) + "," + ( pieceColumn - 1 ) );
-                }
-                if ( isEnemy( board, pieceRow + 1, pieceColumn + 1 ) ){
-                    moves.add( ( pieceRow + 1 ) + "," + ( pieceColumn + 1 ) );
-                }
+            if ( isEnemy( board, navOp.apply(pieceRow), pieceColumn + 1 ) ){
+                moves.add( ( navOp.apply(pieceRow) ) + "," + ( pieceColumn + 1 ) );
             }
         }
         return moves;
