@@ -1,6 +1,7 @@
 package org.clps.holochess;
 
-import javax.swing.ImageIcon;
+import org.clps.holochess.enumeration.PieceColorEnum;
+
 import java.util.ArrayList;
 import java.util.function.Function;
 // -------------------------------------------------------------------------
@@ -30,7 +31,7 @@ public class Pawn
      * @param color
      *            either GamePiece.WHITE, BLACK, or UNASSIGNED
      */
-    public Pawn( ChessGameBoard board, int row, int col, int color ){
+    public Pawn( ChessGameBoard board, int row, int col, PieceColorEnum color ){
         super( board, row, col, color, true );
         notMoved = true;
         possibleMoves = calculatePossibleMoves( board );
@@ -51,8 +52,8 @@ public class Pawn
         if ( super.move( board, row, col ) ){
             notMoved = false;
             possibleMoves = calculatePossibleMoves( board );
-            if ( ( getColorOfPiece() == ChessGamePiece.BLACK && row == 7 )
-                || ( getColorOfPiece() == ChessGamePiece.WHITE && row == 0 ) ){ // pawn has reached the end of the board, promote it to queen
+            if ( ( getColorOfPiece() == PieceColorEnum.BLACK && row == 7 )
+                || ( getColorOfPiece() == PieceColorEnum.WHITE && row == 0 ) ){ // pawn has reached the end of the board, promote it to queen
                 board.getCell( row, col ).setPieceOnSquare( new Queen(
                     board,
                     row,
@@ -76,7 +77,7 @@ public class Pawn
      */
     @Override
     protected ArrayList<String> calculatePossibleMoves( ChessGameBoard board ){
-    	Function<Integer, Integer> navOp = ChessGamePiece.WHITE == this.getColorOfPiece() ? 
+    	Function<Integer, Integer> navOp = PieceColorEnum.WHITE == this.getColorOfPiece() ? 
     			(x) -> x -1 : (x) -> x+1;
     	
         ArrayList<String> moves = new ArrayList<String>();
@@ -98,37 +99,13 @@ public class Pawn
                 count++;
             }
             
-            if ( isEnemy( board, navOp.apply(pieceRow), pieceColumn - 1 ) ){
-                moves.add( ( navOp.apply(pieceRow) ) + "," + ( pieceColumn - 1 ) );
-            }
+			if ( isEnemy( board, navOp.apply(pieceRow), pieceColumn - 1 ) ){
+    			moves.add( ( navOp.apply(pieceRow) ) + "," + ( pieceColumn - 1 ) );
+			}
             if ( isEnemy( board, navOp.apply(pieceRow), pieceColumn + 1 ) ){
                 moves.add( ( navOp.apply(pieceRow) ) + "," + ( pieceColumn + 1 ) );
             }
         }
         return moves;
-    }
-    /**
-     * Creates an icon for this piece depending on the piece's color.
-     *
-     * @return ImageIcon the ImageIcon representation of this piece.
-     */
-    @Override
-    public ImageIcon createImageByPieceType(){
-        if ( getColorOfPiece() == ChessGamePiece.WHITE ){
-            return new ImageIcon(
-                getClass().getResource("/chessImages/WhitePawn.gif")
-            );            
-        }
-        else if ( getColorOfPiece() == ChessGamePiece.BLACK ){
-            return new ImageIcon(
-                getClass().getResource("/chessImages/BlackPawn.gif")
-            );            
-        }
-        else
-        {
-            return new ImageIcon(
-                getClass().getResource("/chessImages/default-Unassigned.gif")
-            );           
-        }
     }
 }
