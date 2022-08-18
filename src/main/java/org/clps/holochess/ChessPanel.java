@@ -2,14 +2,8 @@ package org.clps.holochess;
 
 import java.awt.*;
 import javax.swing.*;
-
-import org.clps.holochess.modules.AppModules;
-import org.clps.holochess.modules.IChessGameLog;
-
-import com.google.inject.Guice;
 import com.google.inject.Inject;
-import com.google.inject.Injector;
-import com.google.inject.Provides;
+
 import com.google.inject.name.Named;
 // -------------------------------------------------------------------------
 /**
@@ -23,6 +17,10 @@ import com.google.inject.name.Named;
 
 public class ChessPanel
     extends JPanel{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	/* file, options and help sections */
     private ChessMenuBar    menuBar;
     /* render the grid of the chess */

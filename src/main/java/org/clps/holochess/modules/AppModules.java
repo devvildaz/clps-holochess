@@ -1,26 +1,30 @@
 package org.clps.holochess.modules;
 
 
+import java.util.logging.Logger;
+
 import org.clps.holochess.ChessGameBoard;
 import org.clps.holochess.ChessGameEngine;
 import org.clps.holochess.ChessGameLog;
 
 import com.google.inject.AbstractModule;
-import com.google.inject.Provides;
+
 import com.google.inject.Scopes;
-import com.google.inject.Singleton;
-import com.google.inject.name.Named;
+
+
 import com.google.inject.name.Names;
 
 public class AppModules extends AbstractModule{
-
-	
+	static Logger logger;
+	static {
+		logger = Logger.getLogger("MyLog");
+	}
 	
    @Override
    public void configure() {
       bind(ChessGameLog.class)
       .annotatedWith(Names.named("GameLog"))
-      .to(ChessGameLog.class).in(Scopes.SINGLETON);;
+      .to(ChessGameLog.class).in(Scopes.SINGLETON);
       
       bind(ChessGameBoard.class)
       .annotatedWith(Names.named("GameBoard"))
@@ -36,9 +40,9 @@ public class AppModules extends AbstractModule{
 		  .annotatedWith(Names.named("GameEngine"))
 		  .toConstructor(
 			  ChessGameEngine.class.getConstructor(classes)
-		  ).in(Scopes.SINGLETON);;
+		  ).in(Scopes.SINGLETON);
 	} catch (NoSuchMethodException | SecurityException e) {
-		System.out.println("Game Engine no se inicializado");
+		logger.info("Game Engine no se inicializado");
 	}
    } 
 }

@@ -13,7 +13,11 @@ import javax.swing.JPanel;
  */
 public class BoardSquare
     extends JPanel{
-    private int            row;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 7734789932188332031L;
+	private int            row;
     private int            col;
     private ChessGamePiece piece;
     private JLabel         imageLabel;

@@ -10,6 +10,7 @@ import com.google.inject.Inject;
 import com.google.inject.name.Named;
 
 import java.awt.event.MouseEvent;
+import java.io.Serializable;
 // -------------------------------------------------------------------------
 /**
  * This is the backend behind the Chess game. Handles the turn-based aspects of
@@ -20,8 +21,12 @@ import java.awt.event.MouseEvent;
  * @author Danielle Bushrow (dbushrow)
  * @version 2010.11.17
  */
-public class ChessGameEngine{ /* PORHACER: chess game engine as a server */
-    private ChessGamePiece currentPiece;
+public class ChessGameEngine implements Serializable{ /* PORHACER: chess game engine as a server */
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -8277977886729879906L;
+	private ChessGamePiece currentPiece;
     private boolean        firstClick;
     
     private ChessGameBoard board; /* PORHACER: chess game board as a client */

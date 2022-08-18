@@ -5,7 +5,6 @@ import javax.swing.ScrollPaneConstants;
 
 import org.clps.holochess.modules.IChessGameLog;
 
-import com.google.inject.Inject;
 
 import javax.swing.JScrollPane;
 import java.util.Date;

@@ -14,6 +14,10 @@ import java.util.ArrayList;
  */
 public class Bishop extends ChessGamePiece{
     /**
+	 * 
+	 */
+	private static final long serialVersionUID = -7154162227611492075L;
+	/**
      * Creates a new Bishop object.
      * 
      * @param board

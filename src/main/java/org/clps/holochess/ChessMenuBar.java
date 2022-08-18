@@ -100,13 +100,13 @@ public class ChessMenuBar
             while ( possibleFrame != null && !( possibleFrame instanceof JFrame ) ){
                 possibleFrame = possibleFrame.getParent();
             }
-            try {
-            	JFrame frame = (JFrame)possibleFrame;
-                frame.setVisible( false );
-                frame.dispose();	
-            } catch (NullPointerException e) {
-            	System.out.println("PossibleFrame is null");
-            }
+            
+        	JFrame frame = (JFrame)possibleFrame;
+        	if(frame != null) {
+        		frame.setVisible( false );
+                frame.dispose();
+        	}
+                	
             
         }
         /**

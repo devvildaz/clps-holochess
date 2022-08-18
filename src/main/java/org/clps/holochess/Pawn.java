@@ -3,7 +3,7 @@ package org.clps.holochess;
 import org.clps.holochess.enumeration.PieceColorEnum;
 
 import java.util.ArrayList;
-import java.util.function.Function;
+
 import java.util.function.IntUnaryOperator;
 // -------------------------------------------------------------------------
 /**
@@ -18,7 +18,11 @@ import java.util.function.IntUnaryOperator;
  */
 public class Pawn
     extends ChessGamePiece{
-    private boolean notMoved;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private boolean notMoved;
     // ----------------------------------------------------------
     /**
      * Create a new Pawn object.
@@ -79,9 +83,9 @@ public class Pawn
     @Override
     protected ArrayList<String> calculatePossibleMoves( ChessGameBoard board ){
     	IntUnaryOperator navOp = PieceColorEnum.WHITE == this.getColorOfPiece() ? 
-    			(x) -> x -1 : (x) -> x+1;
+    			x -> x -1 : x -> x+1;
     	
-        ArrayList<String> moves = new ArrayList<String>();
+        ArrayList<String> moves = new ArrayList<>();
         if ( isPieceOnScreen() ){
             int currRow = navOp.applyAsInt(pieceRow);
             int count = 1;

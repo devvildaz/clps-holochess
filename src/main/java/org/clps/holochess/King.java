@@ -14,7 +14,11 @@ import java.util.ArrayList;
  */
 public class King
     extends ChessGamePiece{
-    // ----------------------------------------------------------
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	// ----------------------------------------------------------
     /**
      * Create a new King object.
      *
@@ -41,14 +45,7 @@ public class King
     @Override
     protected ArrayList<String> calculatePossibleMoves( ChessGameBoard board ){
         ArrayList<String> allMoves = new ArrayList<>();
-        allMoves.addAll( calculateNorthEastMoves( board, 1 ) );
-        allMoves.addAll( calculateNorthWestMoves( board, 1 ) );
-        allMoves.addAll( calculateSouthWestMoves( board, 1 ) );
-        allMoves.addAll( calculateSouthEastMoves( board, 1 ) );
-        allMoves.addAll( calculateNorthMoves( board, 1 ) );
-        allMoves.addAll( calculateSouthMoves( board, 1 ) );
-        allMoves.addAll( calculateWestMoves( board, 1 ) );
-        allMoves.addAll( calculateEastMoves( board, 1 ) );
+        calculateAllMoves(board, allMoves, 1);
         return allMoves;
     }
     /**

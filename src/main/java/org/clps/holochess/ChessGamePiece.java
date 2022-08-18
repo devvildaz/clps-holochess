@@ -3,7 +3,10 @@ package org.clps.holochess;
 import org.clps.holochess.enumeration.PieceColorEnum;
 
 import java.awt.Color;
+import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
+
 import javax.swing.ImageIcon;
 
 // -------------------------------------------------------------------------
@@ -18,16 +21,19 @@ import javax.swing.ImageIcon;
  * @author Danielle Bushrow (dbushrow)
  * @version 2010.11.17
  */
-public abstract class ChessGamePiece{
-    private boolean             skipMoveGeneration;
+public abstract class ChessGamePiece implements Serializable{
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private boolean             skipMoveGeneration;
     private PieceColorEnum pieceColor;
     private ImageIcon           pieceImage;
-    // private ChessGameEngine 	engine;
     /**
      * The list of possible moves for this piece. Updated when actions involving
      * this piece occur. (created, moved, selected, etc)
      */
-    protected ArrayList<String> possibleMoves;
+    protected transient List<String> possibleMoves;
     /**
      * The game piece's row.
      */
@@ -110,9 +116,6 @@ public abstract class ChessGamePiece{
         if ( !this.skipMoveGeneration ){
             possibleMoves = calculatePossibleMoves( board );
         }
-        
-        //Injector injector = Guice.createInjector(new AppModules());
-        //ChessGameEngine engine = injector.getProvider(ChessGameEngine.class).get(); 
     }
     // ----------------------------------------------------------
     /**
@@ -211,7 +214,7 @@ public abstract class ChessGamePiece{
     protected ArrayList<String> calculateEastMoves(
         ChessGameBoard board,
         int numMoves ){
-        ArrayList<String> moves = new ArrayList<String>();
+        ArrayList<String> moves = new ArrayList<>();
         int count = 0;
         
         
@@ -344,32 +347,29 @@ public abstract class ChessGamePiece{
             			targetCol = pieceColumn - i;
             			break;
             		case NORTHEAST:
-            			targetRow = pieceRow + i;
-            			targetCol = pieceColumn - i;
+            			targetRow = pieceRow - i;
+            			targetCol = pieceColumn + i;
             			break;
             		case SOUTHEAST:
             			targetRow = pieceRow + i;
             			targetCol = pieceColumn + i;
             			break;
             		case SOUTHWEST:
-            			targetRow = pieceRow - i;
-            			targetCol = pieceColumn + i;
+            			targetRow = pieceRow + i;
+            			targetCol = pieceColumn - i;
             			break;
             	}
-                if ( isOnScreen( targetRow, targetCol )) {
-                	ChessGamePiece currentPiece = board.getCell( targetRow, targetCol ).getPieceOnSquare();
-                	boolean currPieceIsEnemy = isEnemy( board, targetRow, targetCol);
-                	if(
-            			currentPiece == null  ||
-            			currPieceIsEnemy
-        			) {
-                		moves.add( ( targetRow ) + "," + ( targetCol ) );
-                        count++;
-                	}
-                	if(currentPiece != null) {
-                		break;
-                	}
-                }
+
+            	
+                if ( isOnScreen( targetRow, targetCol ) && board.getCell( targetRow, targetCol ).getPieceOnSquare() == null  ||
+            		isEnemy( board, targetRow, targetCol)) {
+            		moves.add( ( targetRow ) + "," + ( targetCol ) );
+                    count++;
+            	}  
+                else if(isOnScreen( targetRow, targetCol ) && board.getCell( targetRow, targetCol ).getPieceOnSquare() != null ) {
+            		break;
+            	}
+            	
             }
         }
         return moves;
@@ -465,7 +465,7 @@ public abstract class ChessGamePiece{
                 ChessGraveyard graveyard;
                 ChessGameEngine gameEngine = 
                     ( (ChessPanel)board.getParent() ).getGameEngine();
-                		//injector.getProvider(ChessGameEngine.class).get();
+                		
                 if ( gameEngine.getCurrentPlayer() == 1 ){
                     graveyard =
                         ( (ChessPanel)board.getParent() ).getGraveyard( 2 );
@@ -533,11 +533,9 @@ public abstract class ChessGamePiece{
         ChessGamePiece oldPieceOnOtherSquare =
             board.getCell( row, col ).getPieceOnSquare();
         
-        //Injector injector = Guice.createInjector(ChessMain.modules);
-        //Binding<ChessGameEngine> binding = injector.getBinding(ChessGameEngine.class);
+        
         ChessGameEngine engine =
             ( (ChessPanel)board.getParent() ).getGameEngine();
-        	//injector.getProvider(ChessGameEngine.class).get();
         
         int oldRow = pieceRow;
         int oldColumn = pieceColumn;
@@ -689,7 +687,7 @@ public abstract class ChessGamePiece{
      * @param board the game board to check on
      * @return ArrayList<GamePiece> the list of attackers
      */
-    public ArrayList<ChessGamePiece> getCurrentAttackers( ChessGameBoard board ){
+    public List<ChessGamePiece> getCurrentAttackers( ChessGameBoard board ){
         ArrayList<ChessGamePiece> attackers = new ArrayList<>();
         PieceColorEnum enemyColor =
             ( this.getColorOfPiece() == PieceColorEnum.BLACK )
@@ -721,5 +719,16 @@ public abstract class ChessGamePiece{
     public String toString(){
         return this.getClass().toString().substring( 6 ) + " @ (" + pieceRow
             + ", " + pieceColumn + ")";
+    }
+    
+    protected void calculateAllMoves(ChessGameBoard board, List<String> allMoves,int numMoves) {
+        allMoves.addAll( calculateNorthEastMoves( board, numMoves ) );
+        allMoves.addAll( calculateNorthWestMoves( board, numMoves ) );
+        allMoves.addAll( calculateSouthWestMoves( board, numMoves ) );
+        allMoves.addAll( calculateSouthEastMoves( board, numMoves ) );
+        allMoves.addAll( calculateNorthMoves( board, numMoves ) );
+        allMoves.addAll( calculateSouthMoves( board, numMoves ) );
+        allMoves.addAll( calculateWestMoves( board, numMoves ) );
+        allMoves.addAll( calculateEastMoves( board, numMoves ) );
     }
 }
