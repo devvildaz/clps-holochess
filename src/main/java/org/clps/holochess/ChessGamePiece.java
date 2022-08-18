@@ -135,7 +135,7 @@ public abstract class ChessGamePiece{
     protected ArrayList<String> calculateSouthMoves(
         ChessGameBoard board,
         int numMoves ){
-        ArrayList<String> moves = new ArrayList<String>();
+        ArrayList<String> moves = new ArrayList<>();
         int count = 0;
         if ( isPieceOnScreen() ){
             for ( int i = pieceRow + 1; i < 8 && count < numMoves; i++ ){
@@ -169,7 +169,7 @@ public abstract class ChessGamePiece{
     protected ArrayList<String> calculateNorthMoves(
         ChessGameBoard board,
         int numMoves ){
-        ArrayList<String> moves = new ArrayList<String>();
+        ArrayList<String> moves = new ArrayList<>();
         int count = 0;
         if ( isPieceOnScreen() ){
             for ( int i = pieceRow - 1; i >= 0 && count < numMoves; i-- ){
@@ -237,7 +237,7 @@ public abstract class ChessGamePiece{
     protected ArrayList<String> calculateWestMoves(
         ChessGameBoard board,
         int numMoves ){
-        ArrayList<String> moves = new ArrayList<String>();
+        ArrayList<String> moves = new ArrayList<>();
         int count = 0;
         if ( isPieceOnScreen() ){
             for ( int i = pieceColumn - 1; i >= 0 && count < numMoves; i-- ){
@@ -271,7 +271,7 @@ public abstract class ChessGamePiece{
     protected ArrayList<String> calculateNorthWestMoves(
         ChessGameBoard board,
         int numMoves ){
-        ArrayList<String> moves = new ArrayList<String>();
+        ArrayList<String> moves = new ArrayList<>();
         int count = 0;
         if ( isPieceOnScreen() ){
             for ( int i = 1; i < 8 && count < numMoves; i++ ){
@@ -308,7 +308,7 @@ public abstract class ChessGamePiece{
     protected ArrayList<String> calculateNorthEastMoves(
         ChessGameBoard board,
         int numMoves ){
-        ArrayList<String> moves = new ArrayList<String>();
+        ArrayList<String> moves = new ArrayList<>();
         int count = 0;
         if ( isPieceOnScreen() ){
             for ( int i = 1; i < 8 && count < numMoves; i++ ){
@@ -345,7 +345,7 @@ public abstract class ChessGamePiece{
     protected ArrayList<String> calculateSouthWestMoves(
         ChessGameBoard board,
         int numMoves ){
-        ArrayList<String> moves = new ArrayList<String>();
+        ArrayList<String> moves = new ArrayList<>();
         int count = 0;
         if ( isPieceOnScreen() ){
             for ( int i = 1; i < 8 && count < numMoves; i++ ){
@@ -382,7 +382,7 @@ public abstract class ChessGamePiece{
     protected ArrayList<String> calculateSouthEastMoves(
         ChessGameBoard board,
         int numMoves ){
-        ArrayList<String> moves = new ArrayList<String>();
+        ArrayList<String> moves = new ArrayList<>();
         int count = 0;
         if ( isPieceOnScreen() ){
             for ( int i = 1; i < 8 && count < numMoves; i++ ){
@@ -411,7 +411,25 @@ public abstract class ChessGamePiece{
      * @return ImageIcon the image that represents this game piece, different
      *         for each piece.
      */
-    public abstract ImageIcon createImageByPieceType();
+    public ImageIcon createImageByPieceType() {
+        if ( getColorOfPiece() == PieceColorEnum.WHITE ){
+            return new ImageIcon(
+                getClass().getResource("/chessImages/White"+this.getClass().getSimpleName()+".gif")
+            );            
+        }
+        else if ( getColorOfPiece() == PieceColorEnum.BLACK ){
+            return new ImageIcon(
+                getClass().getResource("/chessImages/Black"+this.getClass().getSimpleName()+".gif")
+            );            
+        }
+        else
+        {
+            return new ImageIcon(
+                getClass().getResource("/chessImages/default-Unassigned.gif")
+            ); 
+        }
+    }
+    
     /**
      * Return the ImageIcon as an Image.
      *
@@ -441,13 +459,7 @@ public abstract class ChessGamePiece{
      * @return boolean true if the location is valid, false if not
      */
     public boolean isOnScreen( int row, int col ){
-        if ( row >= 0 && row <= 7 && col >= 0 && col <= 7 ){
-            return true;
-        }
-        else
-        {
-            return false;
-        }
+        return ( row >= 0 && row <= 7 && col >= 0 && col <= 7 );
     }
     // ----------------------------------------------------------
     /**
@@ -680,23 +692,11 @@ public abstract class ChessGamePiece{
             return false;
         }
         if ( this.getColorOfPiece() == PieceColorEnum.WHITE ){
-            if ( enemyPiece.getColorOfPiece() == PieceColorEnum.BLACK ){
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            return ( enemyPiece.getColorOfPiece() == PieceColorEnum.BLACK );
         }
         else
         {
-            if ( enemyPiece.getColorOfPiece() == PieceColorEnum.WHITE ){
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            return ( enemyPiece.getColorOfPiece() == PieceColorEnum.WHITE );
         }
     }
     // ----------------------------------------------------------
@@ -707,7 +707,7 @@ public abstract class ChessGamePiece{
      * @return ArrayList<GamePiece> the list of attackers
      */
     public ArrayList<ChessGamePiece> getCurrentAttackers( ChessGameBoard board ){
-        ArrayList<ChessGamePiece> attackers = new ArrayList<ChessGamePiece>();
+        ArrayList<ChessGamePiece> attackers = new ArrayList<>();
         PieceColorEnum enemyColor =
             ( this.getColorOfPiece() == PieceColorEnum.BLACK )
                 ? PieceColorEnum.WHITE

@@ -2,7 +2,6 @@ package org.clps.holochess;
 
 import org.clps.holochess.enumeration.PieceColorEnum;
 
-import javax.swing.ImageIcon;
 import java.util.ArrayList;
 // -------------------------------------------------------------------------
 /**
@@ -74,7 +73,7 @@ public class Pawn
      */
     @Override
     protected ArrayList<String> calculatePossibleMoves( ChessGameBoard board ){
-        ArrayList<String> moves = new ArrayList<String>();
+        ArrayList<String> moves = new ArrayList<>();
         if ( isPieceOnScreen() ){
             int currRow =
                 getColorOfPiece() == PieceColorEnum.WHITE
@@ -120,29 +119,5 @@ public class Pawn
             }
         }
         return moves;
-    }
-    /**
-     * Creates an icon for this piece depending on the piece's color.
-     *
-     * @return ImageIcon the ImageIcon representation of this piece.
-     */
-    @Override
-    public ImageIcon createImageByPieceType(){
-        if ( getColorOfPiece() == PieceColorEnum.WHITE ){
-            return new ImageIcon(
-                getClass().getResource("/chessImages/WhitePawn.gif")
-            );            
-        }
-        else if ( getColorOfPiece() == PieceColorEnum.BLACK ){
-            return new ImageIcon(
-                getClass().getResource("/chessImages/BlackPawn.gif")
-            );            
-        }
-        else
-        {
-            return new ImageIcon(
-                getClass().getResource("/chessImages/default-Unassigned.gif")
-            );           
-        }
     }
 }

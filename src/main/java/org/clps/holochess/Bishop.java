@@ -3,7 +3,6 @@ package org.clps.holochess;
 import org.clps.holochess.enumeration.PieceColorEnum;
 
 import java.util.ArrayList;
-import javax.swing.ImageIcon;
 // -------------------------------------------------------------------------
 /**
  * Class to represent the Bishop piece.
@@ -39,38 +38,11 @@ public class Bishop extends ChessGamePiece{
      */
     @Override
     protected ArrayList<String> calculatePossibleMoves( ChessGameBoard board ){
-        ArrayList<String> northEastMoves = calculateNorthEastMoves( board, 8 );
-        ArrayList<String> northWestMoves = calculateNorthWestMoves( board, 8 );
-        ArrayList<String> southEastMoves = calculateSouthEastMoves( board, 8 );
-        ArrayList<String> southWestMoves = calculateSouthWestMoves( board, 8 );
-        ArrayList<String> allMoves = new ArrayList<String>();
-        allMoves.addAll( northEastMoves );
-        allMoves.addAll( northWestMoves );
-        allMoves.addAll( southEastMoves );
-        allMoves.addAll( southWestMoves );
+        ArrayList<String> allMoves = new ArrayList<>();
+        allMoves.addAll( calculateNorthEastMoves( board, 8 ) );
+        allMoves.addAll( calculateNorthWestMoves( board, 8 ) );
+        allMoves.addAll( calculateSouthEastMoves( board, 8 ) );
+        allMoves.addAll( calculateSouthWestMoves( board, 8 ) );
         return allMoves;
-    }
-    /**
-     * Creates an icon for this piece depending on the piece's color.
-     * 
-     * @return ImageIcon the ImageIcon representation of this piece.
-     */
-    @Override
-    public ImageIcon createImageByPieceType(){
-        if ( getColorOfPiece() == PieceColorEnum.WHITE ){
-            return new ImageIcon(
-                getClass().getResource("/chessImages/WhiteBishop.gif")
-            );            
-        }
-        else if ( getColorOfPiece() == PieceColorEnum.BLACK ){
-            return new ImageIcon(
-                getClass().getResource("/chessImages/BlackBishop.gif")
-            );
-        }
-        else{
-            return new ImageIcon(
-                getClass().getResource("/chessImages/BlackBishop.gif")
-            );
-        }
     }
 }

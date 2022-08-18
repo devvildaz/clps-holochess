@@ -28,6 +28,7 @@ tasks.named('test') {
 }
 
 dependencies {
+	implementation 'com.google.inject:guice:5.1.0'
     implementation 'com.google.guava:guava:31.1-jre'
     testImplementation 'org.junit.jupiter:junit-jupiter:5.8.1'
     

@@ -5,6 +5,10 @@ import org.clps.holochess.enumeration.PieceColorEnum;
 import java.util.ArrayList;
 import java.awt.Color;
 import javax.swing.JOptionPane;
+
+import com.google.inject.Inject;
+import com.google.inject.name.Named;
+
 import java.awt.event.MouseEvent;
 // -------------------------------------------------------------------------
 /**
@@ -16,13 +20,19 @@ import java.awt.event.MouseEvent;
  * @author Danielle Bushrow (dbushrow)
  * @version 2010.11.17
  */
-public class ChessGameEngine{
+public class ChessGameEngine{ /* PORHACER: chess game engine as a server */
     private ChessGamePiece currentPiece;
     private boolean        firstClick;
+    
+    private ChessGameBoard board; /* PORHACER: chess game board as a client */
+    private King           king1; /* get the king of the one player */
+    private King           king2; /* get the king of the two player */
+    
+    
     private int            currentPlayer;
-    private ChessGameBoard board;
-    private King           king1;
-    private King           king2;
+
+    private ChessGameLog    gameLog;
+    
     // ----------------------------------------------------------
     /**
      * Create a new ChessGameEngine object. Accepts a fully-created
@@ -31,14 +41,16 @@ public class ChessGameEngine{
      * @param board
      *            the reference ChessGameBoard
      */
-    public ChessGameEngine( ChessGameBoard board ){
+    @Inject
+    public ChessGameEngine( @Named("GameLog") ChessGameLog gameLog, @Named("GameBoard") ChessGameBoard board){
+    	this.gameLog = gameLog;
         firstClick = true;
         currentPlayer = 1;
         this.board = board;
         this.king1 = (King)board.getCell( 7, 3 ).getPieceOnSquare();
         this.king2 = (King)board.getCell( 0, 3 ).getPieceOnSquare();
-        ( (ChessPanel)board.getParent() ).getGameLog().clearLog();
-        ( (ChessPanel)board.getParent() ).getGameLog().addToLog(
+        gameLog.clearLog(); 
+        gameLog.addToLog( /* PORHACER: Inject Log Service */
             "A new chess "
                 + "game has been started. Player 1 (white) will play "
                 + "against Player 2 (black). BEGIN!" );
@@ -56,8 +68,8 @@ public class ChessGameEngine{
         ( (ChessPanel)board.getParent() ).revalidate();
         this.king1 = (King)board.getCell( 7, 3 ).getPieceOnSquare();
         this.king2 = (King)board.getCell( 0, 3 ).getPieceOnSquare();
-        ( (ChessPanel)board.getParent() ).getGameLog().clearLog();
-        ( (ChessPanel)board.getParent() ).getGameLog().addToLog(
+        gameLog.clearLog();
+        gameLog.addToLog(
             "A new chess "
                 + "game has been started. Player 1 (white) will play "
                 + "against Player 2 (black). BEGIN!" );
@@ -117,18 +129,12 @@ public class ChessGameEngine{
         }
         if ( currentPlayer == 2 ) // black player
         {
-            if ( currentPiece.getColorOfPiece() == PieceColorEnum.BLACK ){
-                return true;
-            }
-            return false;
+        	return ( currentPiece.getColorOfPiece() == PieceColorEnum.BLACK );
         }
         else
         // white player
         {
-            if ( currentPiece.getColorOfPiece() == PieceColorEnum.WHITE ){
-                return true;
-            }
-            return false;
+        	return ( currentPiece.getColorOfPiece() == PieceColorEnum.WHITE );
         }
     }
     /**
@@ -286,31 +292,27 @@ public class ChessGameEngine{
                     currentPiece.move(
                         board,
                         squareClicked.getRow(),
-                        squareClicked.getColumn() );
-                if ( moveSuccessful ){
-                    checkGameConditions();
-                }
-                else
-                {
-                    int row = squareClicked.getRow();
-                    int col = squareClicked.getColumn();
-                    JOptionPane.showMessageDialog(
-                        squareClicked,
-                        "The move to row " + ( row + 1 ) + " and column "
-                            + ( col + 1 )
-                            + " is either not valid or not legal "
-                            + "for this piece. Choose another move location, "
-                            + "and try using your brain this time!",
-                        "Invalid move",
-                        JOptionPane.ERROR_MESSAGE );
-                }
-                firstClick = true;
-            }
-            else
-            // user is just unselecting the current piece
-            {
-                firstClick = true;
-            }
+                        squareClicked.getColumn());
+        if (moveSuccessful) {
+          checkGameConditions();
+        } else {
+          int row = squareClicked.getRow();
+          int col = squareClicked.getColumn();
+          JOptionPane.showMessageDialog(
+                  squareClicked,
+                  "The move to row " + (row + 1) + " and column "
+                  + (col + 1)
+                  + " is either not valid or not legal "
+                  + "for this piece. Choose another move location, "
+                  + "and try using your brain this time!",
+                  "Invalid move",
+                  JOptionPane.ERROR_MESSAGE);
         }
+        firstClick = true;
+      } else // user is just unselecting the current piece
+      {
+        firstClick = true;
+      }
     }
+  }
 }

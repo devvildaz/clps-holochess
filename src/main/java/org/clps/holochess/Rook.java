@@ -2,7 +2,6 @@ package org.clps.holochess;
 
 import org.clps.holochess.enumeration.PieceColorEnum;
 
-import javax.swing.ImageIcon;
 import java.util.ArrayList;
 // -------------------------------------------------------------------------
 /**
@@ -39,39 +38,11 @@ public class Rook
      */
     @Override
     protected ArrayList<String> calculatePossibleMoves( ChessGameBoard board ){
-        ArrayList<String> northMoves = calculateNorthMoves( board, 8 );
-        ArrayList<String> southMoves = calculateSouthMoves( board, 8 );
-        ArrayList<String> westMoves = calculateWestMoves( board, 8 );
-        ArrayList<String> eastMoves = calculateEastMoves( board, 8 );
         ArrayList<String> allMoves = new ArrayList<String>();
-        allMoves.addAll( northMoves );
-        allMoves.addAll( southMoves );
-        allMoves.addAll( westMoves );
-        allMoves.addAll( eastMoves );
+        allMoves.addAll( calculateNorthMoves( board, 8 ) );
+        allMoves.addAll( calculateSouthMoves( board, 8 ) );
+        allMoves.addAll( calculateWestMoves( board, 8 ) );
+        allMoves.addAll( calculateEastMoves( board, 8 ) );
         return allMoves;
-    }
-    /**
-     * Creates an icon for this piece depending on the piece's color.
-     *
-     * @return ImageIcon the ImageIcon representation of this piece.
-     */
-    @Override
-    public ImageIcon createImageByPieceType(){
-        if ( getColorOfPiece() == PieceColorEnum.WHITE ){
-            return new ImageIcon(
-                getClass().getResource("/chessImages/WhiteRook.gif")
-            );            
-        }
-        else if ( getColorOfPiece() == PieceColorEnum.BLACK ){
-            return new ImageIcon(
-        		getClass().getResource("/chessImages/BlackRook.gif")
-            );            
-        }
-        else
-        {
-            return new ImageIcon(
-                getClass().getResource("/chessImages/default-Unassigned.gif")
-            );        
-        }
     }
 }
