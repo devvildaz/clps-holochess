@@ -100,9 +100,14 @@ public class ChessMenuBar
             while ( possibleFrame != null && !( possibleFrame instanceof JFrame ) ){
                 possibleFrame = possibleFrame.getParent();
             }
-            JFrame frame = (JFrame)possibleFrame;
-            frame.setVisible( false );
-            frame.dispose();
+            try {
+            	JFrame frame = (JFrame)possibleFrame;
+                frame.setVisible( false );
+                frame.dispose();	
+            } catch (NullPointerException e) {
+            	System.out.println("PossibleFrame is null");
+            }
+            
         }
         /**
          * Takes an appropriate action if the toggle graveyard button is clicked.
