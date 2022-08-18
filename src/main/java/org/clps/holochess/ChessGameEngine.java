@@ -101,10 +101,10 @@ public class ChessGameEngine{ /* PORHACER: chess game engine as a server */
     public boolean playerHasLegalMoves( int playerNum ){
         ArrayList<ChessGamePiece> pieces;
         if ( playerNum == 1 ){
-            pieces = board.getAllWhitePieces();
+            pieces = (ArrayList<ChessGamePiece>) board.getAllWhitePieces();
         }
         else if ( playerNum == 2 ){
-            pieces = board.getAllBlackPieces();
+            pieces = (ArrayList<ChessGamePiece>) board.getAllBlackPieces();
         }
         else
         {
